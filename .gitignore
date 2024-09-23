@@ -1,0 +1,61 @@
+# Ignore Ansible Vault files containing sensitive data
+group_vars/*.vault.yml
+group_vars/*/vault.yml
+host_vars/*.vault.yml
+host_vars/*/vault.yml
+vars/*.vault.yml
+vars/*/vault.yml
+vault.yml
+**/vault.yml
+
+# Ignore any backup files created by editors
+*~
+*.swp
+*.swo
+*.bak
+*.tmp
+.DS_Store
+
+# Ignore compiled Python files
+__pycache__/
+*.py[cod]
+
+# Ignore Ansible retry files
+*.retry
+
+# Ignore SSH key files if any are stored
+*.key
+*.pem
+id_rsa
+id_rsa.pub
+
+# Ignore inventory files if they contain sensitive information
+hosts
+hosts.ini
+inventory
+inventories/
+
+# Ignore local configuration files
+ansible.cfg
+
+# Ignore logs
+logs/
+*.log
+
+# Ignore temporary files and directories
+tmp/
+temp/
+.cache/
+
+# Ignore role dependencies installed via Ansible Galaxy (if any)
+roles/*/.galaxy_install_info
+roles/*/.git
+roles/*/.gitignore
+
+# Ignore virtual environment directories
+venv/
+.env/
+
+# Ignore YAML cache files
+*.yaml~
+*.yml~

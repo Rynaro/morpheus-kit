@@ -1,0 +1,10 @@
+---
+- hosts: morpheus
+  become: yes
+  vars_files:
+    - group_vars/vault.yml
+  roles:
+    - docker
+    - gitlab
+    - owncloud
+    - nginx

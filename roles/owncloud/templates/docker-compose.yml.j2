@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  owncloud:
+    image: owncloud/server:latest
+    restart: always
+    ports:
+      - '8080:8080'
+    environment:
+      - OWNCLOUD_DOMAIN={{ owncloud_domain }}
+      - OWNCLOUD_SUB_URL={{ owncloud_sub_url }}
+      - OWNCLOUD_ADMIN_USERNAME={{ owncloud_admin_username }}
+      - OWNCLOUD_ADMIN_PASSWORD={{ owncloud_admin_password }}
+      - OWNCLOUD_MYSQL_DATABASE={{ owncloud_db_name }}
+      - OWNCLOUD_MYSQL_USER=owncloud
+      - OWNCLOUD_MYSQL_PASSWORD={{ owncloud_db_password }}
+      - OWNCLOUD_MYSQL_HOST=db
+    depends_on:
+      - db
+    volumes:
+      - owncloud_files:/mnt/data
+
+  db:
+    image: mariadb:10.5
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD={{ db_root_password }}
+      - MYSQL_DATABASE={{ owncloud_db_name }}
+      - MYSQL_USER={{ owncloud_db_managed_user }}
+      - MYSQL_PASSWORD={{ owncloud_db_password }}
+    volumes:
+      - db_files:/var/lib/mysql
+
+volumes:
+  owncloud_files:
+  db_files:
