@@ -15,11 +15,18 @@ services:
       - OWNCLOUD_MYSQL_USER=owncloud
       - OWNCLOUD_MYSQL_PASSWORD={{ owncloud_db_password }}
       - OWNCLOUD_MYSQL_HOST=db
+      - OWNCLOUD_MAIL_DOMAIN={{ mail_domain }}
+      - OWNCLOUD_MAIL_FROM_ADDRESS={{ mail_from_address }}
+      - OWNCLOUD_MAIL_SMTP_HOST={{ mail_smtp_host }}
+      - OWNCLOUD_MAIL_SMTP_PORT={{ mail_smtp_port }}
+      - OWNCLOUD_MAIL_SMTP_SECURE={{ mail_smtp_secure }}
+      - OWNCLOUD_MAIL_SMTP_AUTH={{ mail_smtp_auth | lower }}
+      - OWNCLOUD_MAIL_SMTP_NAME={{ mail_smtp_name }}
+      - OWNCLOUD_MAIL_SMTP_PASSWORD={{ mail_smtp_password }}
     depends_on:
       - db
     volumes:
       - owncloud_files:/mnt/data
-
   db:
     image: mariadb:10.5
     restart: always
@@ -33,4 +40,9 @@ services:
 
 volumes:
   owncloud_files:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: "{{ owncloud_data_directory }}"
   db_files:

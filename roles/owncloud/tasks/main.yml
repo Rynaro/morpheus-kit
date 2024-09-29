@@ -1,4 +1,21 @@
 ---
+- name: Ensure OwnCloud data directory exists
+  file:
+    path: "{{ owncloud_data_directory }}"
+    state: directory
+    owner: "{{ owncloud_uid }}"
+    group: "{{ owncloud_gid }}"
+    mode: '0750'
+  become: yes
+
+- name: Adjust ownership of OwnCloud data directory
+  file:
+    path: "{{ owncloud_data_directory }}"
+    owner: "{{ owncloud_uid }}"
+    group: "{{ owncloud_gid }}"
+    recurse: yes
+  become: yes
+
 - name: Create OwnCloud directory
   file:
     path: "/home/{{ ansible_user }}/owncloud"
