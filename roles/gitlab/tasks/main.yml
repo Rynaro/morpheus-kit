@@ -1,4 +1,13 @@
 ---
+- name: Ensure GitLab data directory exists
+  file:
+    path: "{{ gitlab_data_directory }}"
+    state: directory
+    owner: 998
+    group: 998
+    mode: '0750'
+  become: yes
+
 - name: Create GitLab directory
   file:
     path: "/home/{{ ansible_user }}/gitlab"

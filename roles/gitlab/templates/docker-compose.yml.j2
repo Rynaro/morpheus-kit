@@ -9,6 +9,19 @@ services:
       GITLAB_OMNIBUS_CONFIG: |
         external_url '{{ gitlab_external_url }}'
         gitlab_rails['gitlab_relative_url'] = "/gitlab"
+        gitlab_rails['gitlab_email_enabled'] = {{ gitlab_email_enabled | lower }}
+        gitlab_rails['gitlab_email_from'] = '{{ mail_from_address }}'
+        gitlab_rails['gitlab_email_display_name'] = '{{ gitlab_email_display_name }}'
+        gitlab_rails['gitlab_email_reply_to'] = '{{ gitlab_email_reply_to }}'
+        gitlab_rails['smtp_enable'] = {{ gitlab_smtp_enabled | lower }}
+        gitlab_rails['smtp_address'] = '{{ mail_smtp_host }}'
+        gitlab_rails['smtp_port'] = {{ mail_smtp_port }}
+        gitlab_rails['smtp_user_name'] = '{{ mail_smtp_name }}'
+        gitlab_rails['smtp_password'] = '{{ mail_smtp_password }}'
+        gitlab_rails['smtp_domain'] = '{{ mail_domain }}'
+        gitlab_rails['smtp_authentication'] = '{{ gitlab_smtp_authentication }}'
+        gitlab_rails['smtp_enable_starttls_auto'] = {{ gitlab_smtp_enable_starttls_auto | lower }}
+        gitlab_rails['smtp_tls'] = {{ gitlab_smtp_tls | lower }}
     ports:
       - '8181:80'
       - '4443:443'
@@ -22,3 +35,9 @@ volumes:
   gitlab_config:
   gitlab_logs:
   gitlab_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: "{{ gitlab_data_directory }}"
+
